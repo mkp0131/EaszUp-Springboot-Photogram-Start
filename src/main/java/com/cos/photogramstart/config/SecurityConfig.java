@@ -1,13 +1,21 @@
 package com.cos.photogramstart.config;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @EnableWebSecurity // 해당파일로 시큐리티 설정
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Bean
+    public BCryptPasswordEncoder encoder() {
+        return new BCryptPasswordEncoder();
+    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable(); // csrf token 비활성화

@@ -15,6 +15,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // DB에 따라 시퀀스를 사용한다.
     private int id;
 
+    @Column(length = 20, unique = true)
     private String username;
     private String password;
     private String name;
