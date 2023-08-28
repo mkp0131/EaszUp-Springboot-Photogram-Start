@@ -1,13 +1,11 @@
 package com.cos.photogramstart.domain.user;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Generated;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -21,18 +19,18 @@ public class User {
     private String password;
     private String name;
     private String website;
+    private String bio; // 자기소개
     private String email;
-    private String bio;
     private String phone;
     private String gender;
-    private String avatar;
+    private String profileImageUrl;
     private String role;
 
-    private LocalDateTime createdAt;
 
-    @PrePersist
-    public void createdAt() {
-        this.createdAt = LocalDateTime.now();
+    private LocalDateTime createDate;
+
+    @PrePersist // DB에 Insert 되기 직전에 실행
+    public void createDate() {
+        this.createDate = LocalDateTime.now();
     }
 }
-
