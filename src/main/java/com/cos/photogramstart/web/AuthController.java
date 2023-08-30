@@ -17,12 +17,10 @@ import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
 
-
 @Slf4j
 @RequiredArgsConstructor // DI 할때 사용 / 생성자를 따로 만들 필요 X
 @Controller
 public class AuthController {
-
 
     private final AuthService authService;
 
@@ -38,16 +36,15 @@ public class AuthController {
 
     @PostMapping("/auth/signup")
     public String signup(@Valid SignupDto signupDto, BindingResult bindingResult) {
-        if(bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors()) {
             Map<String, String> errMap = new HashMap<>();
-            for (FieldError error: bindingResult.getFieldErrors()) {
+            for (FieldError error : bindingResult.getFieldErrors()) {
                 errMap.put(error.getField(), error.getDefaultMessage());
                 System.out.println(error.getDefaultMessage());
             }
 
             throw new CustomValidationException("유효성 검사 실패", errMap);
-        }
-        else {
+        } else {
             User user = signupDto.toEntity();
             User userEntity = authService.singUp(user);
             return "auth/signup";
