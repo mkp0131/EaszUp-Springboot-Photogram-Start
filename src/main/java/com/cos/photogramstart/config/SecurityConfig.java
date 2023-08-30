@@ -23,7 +23,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/", "/user/**", "/subscribe/**", "/comment/**")
                 .authenticated() // antMatchers 에 입력한 url 은 로그인이 필요
                 .anyRequest().permitAll() // 다른 요청들은 모두 허용
-                .and().formLogin().loginPage("/auth/signin") // 로그인 loginPage 에 설정한 url로 리다이렉트
+                .and().formLogin()
+                .loginPage("/auth/signin") // 로그인 loginPage 에 설정한 url로 리다이렉트
+                .loginProcessingUrl("/auth/signin") // 로그인 요청(post 방식으로 해당 url을 요청시)
                 .defaultSuccessUrl("/"); // 로그인 성공시 "/" url 로 이동
 
     }
