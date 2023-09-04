@@ -20,7 +20,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable(); // csrf token 비활성화
         http.authorizeRequests()
-                .antMatchers("/", "/user/**", "/subscribe/**", "/comment/**")
+                .antMatchers("/", "/user/**", "/subscribe/**", "/comment/**", "/image/**")
                 .authenticated() // antMatchers 에 입력한 url 은 로그인이 필요
                 .anyRequest().permitAll() // 다른 요청들은 모두 허용
                 .and().formLogin()

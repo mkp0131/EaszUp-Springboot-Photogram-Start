@@ -9,8 +9,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 
+@Data
 public class PrincipalDetails implements UserDetails {
 
+    public static final long serialVersionUID = 1L;
     private User user;
 
     public PrincipalDetails(User user) {
