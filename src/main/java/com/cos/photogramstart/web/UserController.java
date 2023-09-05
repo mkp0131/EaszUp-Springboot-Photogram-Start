@@ -49,15 +49,12 @@ public class UserController {
 
             throw new CustomValidationException("유효성 검사 실패", errMap);
         } else {
-
             System.out.println("🦊 userDto: " + userUpdateDto.toEntity());
             User userEntity = userService.updateUser(id, userUpdateDto.toEntity());
             System.out.println("🍟 UserEntity: " + userEntity);
 
             // 스프링 시큐리티에 저장되어 있는 session 을 변경한다.
             principalDetails.setUser(userEntity);
-
-
 
             return "redirect:/user/" + userEntity.getId();
         }

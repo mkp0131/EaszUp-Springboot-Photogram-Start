@@ -6,6 +6,7 @@ import com.cos.photogramstart.web.dto.CMResDto;
 
 import java.util.Map;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,6 +17,7 @@ public class ControllerExceptionHandler {
     @ExceptionHandler(CustomValidationException.class)
     public String validationException(CustomValidationException e) {
         // return new CMResDto<Map<String, String>>(400, e.getMessage(), e.getErrMap());
+        //
         return Script.back(e.getMessage());
     }
 }
