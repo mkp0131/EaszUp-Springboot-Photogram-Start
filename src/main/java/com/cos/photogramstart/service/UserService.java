@@ -2,9 +2,13 @@ package com.cos.photogramstart.service;
 
 import com.cos.photogramstart.domain.user.User;
 import com.cos.photogramstart.domain.user.UserRepository;
+import com.cos.photogramstart.handler.ex.CustomValidationApiException;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.function.Supplier;
 
 import javax.transaction.Transactional;
 
@@ -16,7 +20,11 @@ public class UserService {
 
     @Transactional
     public User updateUser(int id, User user) {
-        User userEntity = userRepository.findById(id).get();
+        // .get() 무조건 있을 경우 사용 (에러때문에 거의 사용할일 없을듯)
+        // orElseThrow() 못찾았을 경우 에러 처리
+        User userEntity = userRepository.findById(id).orElseThrow(() -> {
+            return new CustomValidationApiException("[DB ERROR] ID를 찾을 수 없습니다.");
+        });
         String rawPassword = user.getPassword();
         String encPassword = bCryptPasswordEncoder.encode(rawPassword);
 
