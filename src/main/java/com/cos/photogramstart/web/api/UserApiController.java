@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cos.photogramstart.config.auth.PrincipalDetails;
 import com.cos.photogramstart.domain.user.User;
 import com.cos.photogramstart.handler.ex.CustomApiException;
+import com.cos.photogramstart.handler.ex.CustomValidationApiException;
 import com.cos.photogramstart.handler.ex.CustomValidationException;
 import com.cos.photogramstart.service.UserService;
 import com.cos.photogramstart.web.dto.CMResDto;
@@ -41,7 +42,7 @@ public class UserApiController {
                 System.out.println(error.getDefaultMessage());
             }
 
-            throw new CustomApiException("유효성 검사 실패", errMap);
+            throw new CustomValidationApiException("유효성 검사 실패", errMap);
         } else {
             User userEntity = userService.updateUser(id, userUpdateDto.toEntity());
             System.out.println("🍟 UserEntity: " + userEntity);
