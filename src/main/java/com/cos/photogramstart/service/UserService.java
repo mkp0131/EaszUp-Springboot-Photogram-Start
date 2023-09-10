@@ -3,20 +3,34 @@ package com.cos.photogramstart.service;
 import com.cos.photogramstart.domain.user.User;
 import com.cos.photogramstart.domain.user.UserRepository;
 import com.cos.photogramstart.handler.ex.CustomApiException;
+import com.cos.photogramstart.handler.ex.CustomException;
+import com.cos.photogramstart.web.dto.user.UserProfileDto;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.function.Supplier;
-
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
 public class UserService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Transactional(readOnly = true)
+    public UserProfileDto profile(int pageUserId, int principalId) {
+        UserProfileDto userProfileDto = new UserProfileDto();
+
+        User userEntity = userRepository.findById(pageUserId).orElseThrow(() -> {
+            throw new CustomException("유저가 없습니다.");
+        });
+
+        userProfileDto.setUser(userEntity);
+        userProfileDto.setPageOwnerState(pageUserId == principalId);
+        userProfileDto.setImageCount(userEntity.getImages().size());
+
+        return userProfileDto;
+    }
 
     @Transactional
     public User updateUser(int id, User user) {

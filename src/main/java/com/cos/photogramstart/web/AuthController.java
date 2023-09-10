@@ -1,7 +1,7 @@
 package com.cos.photogramstart.web;
 
 import com.cos.photogramstart.domain.user.User;
-import com.cos.photogramstart.handler.ex.CustomValidationException;
+import com.cos.photogramstart.handler.ex.CustomException;
 import com.cos.photogramstart.service.AuthService;
 import com.cos.photogramstart.web.dto.auth.SignupDto;
 import lombok.RequiredArgsConstructor;
@@ -43,7 +43,7 @@ public class AuthController {
                 System.out.println(error.getDefaultMessage());
             }
 
-            throw new CustomValidationException("유효성 검사 실패", errMap);
+            throw new CustomException("유효성 검사 실패");
         } else {
             User user = signupDto.toEntity();
             User userEntity = authService.singUp(user);
